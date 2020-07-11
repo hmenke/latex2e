@@ -32,7 +32,7 @@
 %<*driver>
 % \fi
 \ProvidesFile{ltfiles.dtx}
-             [2020-06-05 v1.2h LaTeX Kernel (File Handling)]
+             [2020-07-10 v1.2i LaTeX Kernel (File Handling)]
 % \iffalse
 \documentclass{ltxdoc}
 \GetFileInfo{ltfiles.dtx}
@@ -887,21 +887,42 @@
 %  \changes{v1.2c}{2019/10/11}{Remove one brace group}
 %  \changes{v1.2d}{2019/10/26}{remove quotes}
 %  \changes{v1.2e}{2019/11/09}{expand and \cs{string} before removing quotes}
+% \changes{v1.2i}{2020-07-10}{When the argument is empty return an
+%    empty macro instead of \texttt{csnameendcsname} (gh/356)} 
 %    \begin{macrocode}
 %</2ekernel>
 %<*2ekernel|latexrelease>
-%<latexrelease>\IncludeInRelease{2019/10/01}%
-%<latexrelease>                 {\set@curr@file}{Quote file names}%
+%<latexrelease>\IncludeInRelease{2020/10/01}%
+%<latexrelease>                 {\set@curr@file}{Handle empty argument}
 \def\set@curr@file#1{%
   \begingroup
-    \escapechar\m@ne
-    \xdef\@curr@file{%
-      \expandafter\expandafter\expandafter\unquote@name
-      \expandafter\expandafter\expandafter{%
-      \expandafter\string
-        \csname\@firstofone#1\@empty\endcsname}}%
+    \def\reserved@a{#1}%
+    \ifx\reserved@a\@empty
+      \xdef\@curr@file{}%
+    \else
+      \escapechar\m@ne
+      \xdef\@curr@file{%
+        \expandafter\expandafter\expandafter\unquote@name
+        \expandafter\expandafter\expandafter{%
+        \expandafter\string
+          \csname\@firstofone#1\@empty\endcsname}}%
+    \fi
   \endgroup
 }
+%</2ekernel|latexrelease>
+%<latexrelease>\EndIncludeInRelease
+%<latexrelease>\IncludeInRelease{2019/10/01}%
+%<latexrelease>                 {\set@curr@file}{Quote file names}%
+%<latexrelease>\def\set@curr@file#1{%
+%<latexrelease>  \begingroup
+%<latexrelease>    \escapechar\m@ne
+%<latexrelease>    \xdef\@curr@file{%
+%<latexrelease>      \expandafter\expandafter\expandafter\unquote@name
+%<latexrelease>      \expandafter\expandafter\expandafter{%
+%<latexrelease>      \expandafter\string
+%<latexrelease>        \csname\@firstofone#1\@empty\endcsname}}%
+%<latexrelease>  \endgroup
+%<latexrelease>}
 %    \end{macrocode}
 %  \end{macro}
 %  \end{macro}
