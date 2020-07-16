@@ -2,7 +2,6 @@
 \begin{filecontents}{file name.tex}
 \typeout{file name.tex}
 \end{filecontents}
-\RequirePackage[current]{latexrelease}
 
 \input{test2e}
 
@@ -26,4 +25,19 @@
 
 \typeout{leading and trailing space:}
 \input{ file name }
+
 \end{document}
+
+
+% neither work correctly:
+
+\begin{filecontents}{" file name.tex"}
+\typeout{file name.tex with space in front}
+\end{filecontents}
+
+\typeout{special using quotes:}
+\input{" file name"}
+
+\typeout{special using \string\space:}
+\input{\space file name}
+
