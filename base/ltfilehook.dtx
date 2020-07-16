@@ -17,7 +17,7 @@
 % for those people who are interested or want to report an issue.
 %
 %    \begin{macrocode}
-\providecommand\ltfilehookversion{v0.6f}
+\providecommand\ltfilehookversion{v0.6g}
 \providecommand\ltfilehookdate{2020/07/16}
 %    \end{macrocode}
 %
@@ -544,15 +544,22 @@
 %   Now we just hook into \cs{set@curr@file} to add
 %   \cs{@filehook@set@curr@file} at the end, after \cs{@curr@file} is
 %   set.
+% \changes{0.69}{2020-70-16}}{When the argument is empty return an
+%    empty macro instead of \texttt{csnameendcsname} (gh.121)}
 %    \begin{macrocode}
 \def\set@curr@file#1{%
   \begingroup
-    \escapechar\m@ne
-    \xdef\@curr@file{%
-      \expandafter\expandafter\expandafter\unquote@name
-      \expandafter\expandafter\expandafter{%
-      \expandafter\string
+    \def\reserved@a{#1}%
+    \ifx\reserved@a\@empty
+      \xdef\@curr@file{}%
+    \else
+      \escapechar\m@ne
+      \xdef\@curr@file{%
+        \expandafter\expandafter\expandafter\unquote@name
+        \expandafter\expandafter\expandafter{%
+        \expandafter\string
         \csname\@firstofone#1\@empty\endcsname}}%
+    \fi
   \endgroup
   \@filehook@set@curr@file{\@curr@file}%
 }
