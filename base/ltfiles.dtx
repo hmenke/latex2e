@@ -32,7 +32,7 @@
 %<*driver>
 % \fi
 \ProvidesFile{ltfiles.dtx}
-             [2020-06-05 v1.2h LaTeX Kernel (File Handling)]
+             [2020-07-03 v1.2i LaTeX Kernel (File Handling)]
 % \iffalse
 \documentclass{ltxdoc}
 \GetFileInfo{ltfiles.dtx}
@@ -1114,19 +1114,31 @@
 %    Define |\@iinput| (i.e., |\input|) in terms of
 %    |\InputIfIfileExists|.
 % \changes{v0.9b}{1993/12/04}{Macro reimplemented}
+% \changes{v1.2i}{2020-07-03}{Trim leading and trailing spaces}
 %    \begin{macrocode}
 %</2ekernel>
 %<*2ekernel|latexrelease>
-%<latexrelease>\IncludeInRelease{2019/10/01}%
-%<latexrelease>                 {\@iinput}{Quote file names}%
+%<latexrelease>\IncludeInRelease{2020/10/01}%
+%<latexrelease>                 {\@iinput}{Accept spaces in filenames}%
 \def\@iinput#1{%
-  \InputIfFileExists{#1}{}%
+  \set@curr@file@trim@spaces{#1}%
+  \expandafter\InputIfFileExists\expandafter{\@curr@file}{}%
   {\filename@parse\@curr@file
    \edef\reserved@a{\noexpand\@missingfileerror
      {\filename@area\filename@base}%
      {\ifx\filename@ext\relax tex\else\filename@ext\fi}}%
    \reserved@a}}
 %</2ekernel|latexrelease>
+%<latexrelease>\EndIncludeInRelease
+%<latexrelease>\IncludeInRelease{2019/10/01}
+%<latexrelease>                 {\@iinput}{Quote file names}%
+%<latexrelease>\def\@iinput#1{%
+%<latexrelease>  \InputIfFileExists{#1}{}%
+%<latexrelease>  {\filename@parse\@curr@file
+%<latexrelease>   \edef\reserved@a{\noexpand\@missingfileerror
+%<latexrelease>     {\filename@area\filename@base}%
+%<latexrelease>     {\ifx\filename@ext\relax tex\else\filename@ext\fi}}%
+%<latexrelease>   \reserved@a}}
 %<latexrelease>\EndIncludeInRelease
 %<latexrelease>\IncludeInRelease{0000/00/00}%
 %<latexrelease>                 {\@iinput}{Quote file names}%
