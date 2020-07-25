@@ -6,6 +6,11 @@ completeness or accuracy and it contains some references to files that
 are not part of the distribution.
 ================================================================================
 
+2020-07-16  Frank Mittelbach  <Frank.Mittelbach@latex-project.org>
+
+	* ltmiscen.dtx: \begin should not be long for better
+	error recovery (gh/354)
+
 2020-07-10  Johannes Braams  <Johannes.Braams@latex-project.org>
 
 	* ltfiles.dtx: Prevent \input{} from trying to load
