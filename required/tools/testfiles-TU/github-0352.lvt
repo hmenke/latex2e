@@ -10,6 +10,8 @@
 
 \START
 
+\show\vrefrangeformat
+
 \section{A}\label{A}
 
 \newpage
@@ -21,8 +23,6 @@
 \section{C} \label{C}
 
 \newpage
-
-\showoutput
 
 Ref A: \vref{A}.
 

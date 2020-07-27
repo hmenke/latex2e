@@ -40,7 +40,7 @@
 %<package>\DeclareCurrentRelease{}{2019-10-01}
 %<package>
 %<package>\ProvidesPackage{varioref}
-%<package>    [2020/07/20 v1.6d package for extended references (FMi)]
+%<package>    [2020/07/23 v1.6e package for extended references (FMi)]
 % \fi
 %
 %%
@@ -1643,17 +1643,6 @@
 %
 %
 %
-%    After all options are declared we execute the default option
-%    \texttt{english} to set up the defaults and then call
-%    |\ProcessOptions*| to handle any option passed to the package.
-%    The star form is used since we want to execute the options in the
-%    order they are given (in case this isn't used together with the
-%    \pkg{babel} package).
-%    \begin{macrocode}
-\ExecuteOptions{english,final,space}
-\ProcessOptions*
-%    \end{macrocode}
-%
 %
 % \subsection{Defining the main macros}
 %
@@ -2363,16 +2352,13 @@
 %
 %  \begin{macro}{\vrefrangeformat,\vrefrangedefaultformat}
 %    Japanese needs a different word order  in \cs{vrefrange}  so this
-%    is separated out o that it can be changed on language level.
+%    is separated out so that it can be changed on language level.
 % \changes{v1.6d}{2020/07/20}{Macro added (gh/352)}
 %    \begin{macrocode}
 \def\vrefrangedefaultformat#1#2#3{% 
   \reftextlabelrange{#2}{#3} \vpagerefrange[{#1}]{#2}{#3}}
 %    \end{macrocode}
 %    Most languages need the above definition.
-%    \begin{macrocode}
-\let\vrefrangeformat\vrefrangedefaultformat
-%    \end{macrocode}
 %  \end{macro}
 %
 %  \begin{macro}{\Vref}
@@ -2496,7 +2482,21 @@
 }
 %    \end{macrocode}
 %  \end{macro}
-
+%
+%    We now execute the default option
+%    \texttt{english} to set up the defaults and then call
+%    |\ProcessOptions*| to handle any option passed to the package.
+%    This has to be done fairly late because we use \cs{let} inside the options
+%    and that means the commands we \cs{let} to have to be available.
+%
+%    The star form is used since we want to execute the options in the
+%    order they are given (in case this isn't used together with the
+%    \pkg{babel} package).
+%    \begin{macrocode}
+\ExecuteOptions{english,final,space}
+\ProcessOptions*
+%    \end{macrocode}
+%
 %
 %
 %  \subsubsection{Compatibility with older \LaTeX{} formats}
