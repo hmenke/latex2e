@@ -1102,11 +1102,15 @@
 % In |\obeylines|, we say |\let^^M=\par| instead of |\def^^M{\par}|
 % since this allows, for example, |\let\par=\cr \obeylines \halign{...|
 %    \begin{macrocode}
+\def\obeyedline{\par}
+\def\@obeyedline{\obeyedline}
 {\catcode`\^^M=\active % these lines must end with %
-  \gdef\obeylines{\catcode`\^^M\active \let^^M\par}%
-  \global\let^^M\par} % this is in case ^^M appears in a \write
+  \gdef\obeylines{\catcode`\^^M\active \let^^M\@obeyedline}%
+  \global\let^^M\@obeyedline} % this is in case ^^M appears in a \write
+\def\obeyedspace{\space}
+\def\@obeyedspace{\obeyedspace}
 \def\obeyspaces{\catcode`\ \active}
-{\obeyspaces\global\let =\space}
+{\obeyspaces\global\let =\@obeyedspace}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
